@@ -42,7 +42,7 @@ section called "php-debug". It should look like this:
   "php-debug":
     PathMaps: [
       "remotepath;localpath"
-      "/var/www/html/;/home/fabio/devel/catraca/src/"
+      "/var/www/html/;/path/to/project/"
     ]
     PhpException:
       CatchableFatalError: false
