@@ -1,16 +1,19 @@
 FROM php:7-apache
 MAINTAINER Hacklab <contato@hacklab.com.br>
 
-RUN a2enmod rewrite expires ssl \
-    && apt-get update && apt-get install -y libpng12-dev libjpeg-dev libmemcached-dev libmcrypt-dev unzip \
+RUN a2enmod rewrite expires \
+    && apt-get update \
+    && apt-get install -y libpng-dev libjpeg-dev libmemcached-dev libmcrypt-dev unzip \
     && docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr \
-    && docker-php-ext-install calendar gd mysqli mbstring mcrypt zip \
-    && printf "yes\n" | pecl install xdebug \
-    && printf "no\n"  | pecl install apcu-beta \
+    && docker-php-ext-install calendar gd mbstring mysqli opcache zip \
+    && printf "yes \n" | pecl install memcached\
+    && printf "yes \n" | pecl install xdebug-beta\
+    && printf "no \n"  | pecl install apcu-beta\
+    && echo 'extension=memcached.so' > /usr/local/etc/php/conf.d/pecl-memcached.ini \
     && echo 'extension=apcu.so' > /usr/local/etc/php/conf.d/pecl-apcu.ini \
-    && curl -s -o installer.php https://getcomposer.org/installer \
-    && php installer.php --install-dir=/usr/local/bin/ --filename=composer \
-    && rm installer.php \
+    && curl -s -o /usr/local/bin/composer https://getcomposer.org/composer.phar \
+    && chmod 555 /usr/local/bin/composer \
+    && apt-get purge -y libpng-dev libjpeg-dev libmemcached-dev libmcrypt-dev \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /tmp/* \
     && { \
