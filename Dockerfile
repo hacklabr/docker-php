@@ -3,7 +3,7 @@ MAINTAINER Hacklab <contato@hacklab.com.br>
 
 RUN a2enmod rewrite expires \
     && apt-get update \
-    && apt-get install -y libpng12-dev libjpeg-dev libmemcached-dev libmcrypt-dev unzip \
+    && apt-get install -y libpng12-dev libjpeg-dev libmemcached-dev libmcrypt-dev unzip nano less vim\
     && docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr \
     && docker-php-ext-install calendar gd mbstring mcrypt mysqli opcache zip \
     && printf "yes\n" | pecl install memcached-2.2.0 \
