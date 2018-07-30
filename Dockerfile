@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 FROM php:7.0-apache-stretch
 MAINTAINER hacklab/ <contato@hacklab.com.br>
 
@@ -10,7 +9,6 @@ RUN a2enmod remoteip rewrite expires \
     && printf "yes \n" | pecl install memcached\
     && printf "yes \n" | pecl install xdebug-beta\
     && printf "no \n"  | pecl install apcu-beta\
-=======
 FROM php:5.6-apache-jessie
 MAINTAINER Hacklab <contato@hacklab.com.br>
 
@@ -22,7 +20,6 @@ RUN a2enmod rewrite expires \
     && printf "yes\n" | pecl install memcached-2.2.0 \
     && printf "yes\n" | pecl install xdebug \
     && printf "no\n"  | pecl install apcu-4.0.11 \
->>>>>>> 18d9a67440b25f407f800faff2dbe2407c0892f1
     && echo 'extension=memcached.so' > /usr/local/etc/php/conf.d/pecl-memcached.ini \
     && echo 'extension=apcu.so' > /usr/local/etc/php/conf.d/pecl-apcu.ini \
     && curl -s -o /usr/local/bin/composer https://getcomposer.org/composer.phar \
