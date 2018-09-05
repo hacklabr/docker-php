@@ -1,7 +1,7 @@
 FROM php:7.1-apache-stretch
 MAINTAINER hacklab/ <contato@hacklab.com.br>
 
-RUN a2enmod rewrite expires \
+RUN a2enmod remoteip rewrite expires \
     && apt-get update \
     && apt-get install -y libpng-dev libjpeg-dev libmemcached-dev libmcrypt-dev unzip nano vim less \
     && docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr \
