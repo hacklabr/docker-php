@@ -1,4 +1,4 @@
-FROM php:7.0-apache-stretch
+FROM php:7.2-apache
 MAINTAINER hacklab/ <contato@hacklab.com.br>
 
 RUN a2enmod remoteip rewrite expires \
