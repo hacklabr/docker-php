@@ -2,7 +2,7 @@ FROM php:5.6-apache-jessie
 MAINTAINER Hacklab <contato@hacklab.com.br>
 
 # APT configurations need to be copied first to allow apt packages to be downloaded on Jessie
-COPY root/apt/ /etc/apt/
+COPY root/etc/apt/ /etc/apt/
 
 RUN a2enmod rewrite expires \
     && apt-get update \
