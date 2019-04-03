@@ -4,7 +4,7 @@ MAINTAINER Hacklab <contato@hacklab.com.br>
 # APT configurations need to be copied first to allow apt packages to be downloaded on Jessie
 COPY root/etc/apt/ /etc/apt/
 
-RUN a2enmod rewrite expires \
+RUN a2enmod rewrite expires remoteip \
     && apt-get update \
     && apt-get install -y libpng12-dev libjpeg-dev libmemcached-dev libmcrypt-dev unzip nano less vim\
     && docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr \
