@@ -22,4 +22,27 @@ then
     unset extfile remote_port idekey;
 fi
 
+# Configuring Sendmail
+
+if [ ! -z $SMTP_HOST ]; then
+  sendmail_ini="/usr/local/etc/php/conf.d/sendmail.ini"
+  {
+  echo "[mail function]
+  SMTP = $SMTP_HOST
+  smtp_port = $SMTP_PORT
+  username = $SMTP_USER
+  password = $SMTP_PASSWORD
+  sendmail_path= /usr/sbin/sendmail"
+  } >  $sendmail_ini
+
+  sed -i s'/SMTP_PASSWORD/'$SMTP_PASSWORD'/' /etc/mail/authinfo/user-auth
+  sed -i s'/SMTP_USER/'$SMTP_USER'/' /etc/mail/authinfo/user-auth
+  sed -i s'/smtp.mail.com/'$SMTP_HOST'/' /etc/mail/sendmail.mc
+  sed -i s'/587/'$SMTP_PORT'/' /etc/mail/sendmail.mc
+
+  makemap hash /etc/mail/authinfo/user-auth < /etc/mail/authinfo/user-auth
+  make -C /etc/mail
+
+fi
+
 exec "$@"
