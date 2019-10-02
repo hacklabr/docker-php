@@ -3,7 +3,7 @@ MAINTAINER hacklab/ <contato@hacklab.com.br>
 
 RUN a2enmod remoteip rewrite expires \
     && apt-get update \
-    && apt-get install -y libpng-dev libjpeg-dev libmemcached-dev libmcrypt-dev unzip nano vim less \
+    && apt-get install -y libpng-dev libjpeg-dev libmemcached-dev libmcrypt-dev unzip nano vim less libzip-dev \
     && docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr \
     && docker-php-ext-install calendar gd mbstring mysqli opcache zip \
     && printf "yes \n" | pecl install memcached\
