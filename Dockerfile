@@ -3,7 +3,7 @@ MAINTAINER hacklab/ <contato@hacklab.com.br>
 
 RUN a2enmod remoteip rewrite expires \
     && apt-get update \
-    && apt-get install -y libpng-dev libjpeg-dev libmemcached-dev libmcrypt-dev unzip nano vim less libzip-dev \
+    && apt-get install -y libpng-dev libzip-dev libjpeg-dev libmemcached-dev libmcrypt-dev unzip nano vim less libzip-dev \
     && docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr \
     && docker-php-ext-install calendar gd mbstring mysqli opcache zip \
     && printf "yes \n" | pecl install memcached\
@@ -13,7 +13,7 @@ RUN a2enmod remoteip rewrite expires \
     && echo 'extension=apcu.so' > /usr/local/etc/php/conf.d/pecl-apcu.ini \
     && curl -s -o /usr/local/bin/composer https://getcomposer.org/composer.phar \
     && chmod 555 /usr/local/bin/composer \
-    && apt-get purge -y libpng-dev libjpeg-dev libmemcached-dev libmcrypt-dev \
+    && apt-get purge -y libpng-dev libzip-dev libjpeg-dev libmemcached-dev libmcrypt-dev \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /tmp/* \
     && { \
