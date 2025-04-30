@@ -1,21 +1,20 @@
-FROM php:5.6-apache-jessie
-MAINTAINER Hacklab <contato@hacklab.com.br>
+FROM php:5.6-apache-stretch
+LABEL org.opencontainers.image.authors="Hacklab <contato@hacklab.com.br>"
 
 # APT configurations need to be copied first to allow apt packages to be downloaded on Jessie
 COPY root/etc/apt/ /etc/apt/
 
-RUN a2enmod rewrite expires remoteip \
-    && apt-get update \
-    && apt-get install -y --force-yes libpng12-dev libjpeg-dev libmemcached-dev libmcrypt-dev unzip nano less vim\
-    && docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr \
-    && docker-php-ext-install calendar gd mbstring mcrypt mysqli opcache zip \
-    && printf "yes\n" | pecl install memcached-2.2.0 \
-    && printf "no\n"  | pecl install apcu-4.0.11 \
-    && echo 'extension=memcached.so' > /usr/local/etc/php/conf.d/pecl-memcached.ini \
-    && echo 'extension=apcu.so' > /usr/local/etc/php/conf.d/pecl-apcu.ini \
-    && curl -s -o /usr/local/bin/composer https://getcomposer.org/download/2.2.21/composer.phar \
+RUN a2enmod remoteip rewrite expires \
+  && apt-get update \
+  && apt-get install -y openssh-server unzip nano vim less
+
+ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
+
+RUN chmod +x /usr/local/bin/install-php-extensions && sync && \
+    install-php-extensions gd calendar mbstring opcache zip mysqli memcached xdebug apcu
+
+RUN curl -s -o /usr/local/bin/composer https://getcomposer.org/download/2.2.21/composer.phar \
     && chmod 555 /usr/local/bin/composer \
-    && apt-get purge -y libpng-dev libjpeg-dev libmemcached-dev libmcrypt-dev \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /tmp/* \
     && { \
