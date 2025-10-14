@@ -6,12 +6,12 @@ COPY root/etc/apt/ /etc/apt/
 
 RUN a2enmod remoteip rewrite expires \
   && apt-get update \
-  && apt-get install -y openssh-server unzip nano vim less
+  && apt-get install -y --allow-unauthenticated unzip nano vim less openssh-client git curl wget
 
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 
 RUN chmod +x /usr/local/bin/install-php-extensions && sync && \
-    install-php-extensions gd calendar mbstring opcache zip mysqli memcached xdebug apcu
+    install-php-extensions gd calendar mbstring opcache zip mysqli memcached xdebug apcu pdo_mysql sockets mcrypt soap
 
 RUN curl -s -o /usr/local/bin/composer https://getcomposer.org/download/2.2.21/composer.phar \
     && chmod 555 /usr/local/bin/composer \
